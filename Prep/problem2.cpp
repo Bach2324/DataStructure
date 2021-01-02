@@ -46,7 +46,7 @@ int main(int argc, char const *argv[])
         {
             if (line != "")
             {
-
+                
             }
         }
     inFile.close();
