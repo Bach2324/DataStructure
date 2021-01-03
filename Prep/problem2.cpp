@@ -56,8 +56,18 @@ int main(int argc, char const *argv[])
                 count++;
             }
         }
-    inFile.close();
-    printList(parkInfo,count);
+        inFile.close();
+        printList(parkInfo,count);
+        ofstream outFile(argv[2]);
+        
+        for (int i = 0; i < count; i++)
+        {
+            if (parkInfo[i].area > stoi(argv[3]))
+            {
+                outFile << parkInfo[i].parkname << ", " << parkInfo[i].state << ", " << parkInfo[i].area << endl;
+            }
+        }
+        outFile.close();
     }
 return 0;
 }
