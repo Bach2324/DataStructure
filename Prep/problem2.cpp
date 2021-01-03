@@ -32,8 +32,7 @@ void printList(const Park parks[], int length)
 
 int main(int argc, char const *argv[])
 {   
-    stringstream ss;
-
+    Park parkInfo[100];
     ifstream inFile(argv[1]);
     if (inFile.fail())
     {         
@@ -41,15 +40,24 @@ int main(int argc, char const *argv[])
     }
     else
     {
-        string line;            
+        string line, park, state, area;
+        int count = 0;        
         while (getline(inFile, line))                                                       // Read the lines from the file
         {
             if (line != "")
             {
-                
+                stringstream ss(line);
+                getline(ss, park, ',');
+                getline(ss, state, ',');
+                getline(ss, area, ',');
+                state = state.substr(1, 2);
+                area = area.substr(1, area.length());
+                addPark(parkInfo, park, state, stoi(area),count);
+                count++;
             }
         }
     inFile.close();
+    printList(parkInfo,count);
     }
 return 0;
 }
