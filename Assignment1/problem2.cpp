@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <<sstype>
+#include <sstream>
 
 using namespace std;
 
@@ -65,14 +65,25 @@ return;
 
 int main(int argc, const char *argv[])
 {
+    studentData students_grades[100];
     ifstream inFile(argv[1]);
-    stringstream s;
 
-    string line;
+    int count = 0;
+    string line, name, hw, rec, quiz, exam;
     while(getline(inFile, line))
     {
-
+        if (line.length() != 0)
+        {
+            stringstream s(line);
+            getline(s, name, ',');
+            getline(s, hw, ',');
+            getline(s, rec, ',');
+            getline(s, quiz, ',');
+            getline(s, exam);
+            addStudentData(students_grades, name, stoi(hw), stoi(rec), stoi(quiz), stoi(exam), count);
+            count++;
+        }
     }
-
+    printList(students_grades, count);
 return 0;
 }
