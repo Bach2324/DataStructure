@@ -30,7 +30,6 @@ void addStudentData(studentData students[], string studentName, int homework, in
 
 return;
 }
-
 char calcLetter(double avg)
 {
     if (avg >= (double)90)
@@ -62,7 +61,6 @@ void printList(const studentData students[], int length)
     }
 return;
 }
-
 int main(int argc, const char *argv[])
 {
     studentData students_grades[100];
@@ -84,6 +82,77 @@ int main(int argc, const char *argv[])
             count++;
         }
     }
+    inFile.close();
     printList(students_grades, count);
+
+    ofstream outFile(argv[2]);
+    double upper_bound, lower_bound;
+
+    for (int i = 0; i < count; i++)
+    {
+        if (strcmp(argv[4], "A") == 0)
+        {
+            upper_bound = (double)100;
+            if (strcmp(argv[3], "B") == 0)
+            {
+                lower_bound = (double)80;
+            }
+            else if (strcmp(argv[3], "C") == 0)
+            {
+                lower_bound = (double)70;
+            }
+            else if(strcmp(argv[3], "D") == 0)
+            {
+                lower_bound = (double)60;
+            }
+            else
+            {
+                lower_bound = (double)0;
+            }
+        }
+        else if (strcmp(argv[4], "B") == 0)
+        {
+            upper_bound = 89.9;
+            if (strcmp(argv[3], "C") == 0)
+            {
+                lower_bound = (double)70;
+            }
+            else if(strcmp(argv[3], "D") == 0)
+            {
+                lower_bound = (double)60;
+            }
+            else
+            {
+                lower_bound = (double)0;
+            }
+        }
+        else if(strcmp(argv[4], "C") == 0)
+        {
+            upper_bound = 79.9;
+            if(strcmp(argv[3], "D") == 0)
+            {
+                lower_bound = (double)60;
+            }
+            else
+            {
+                lower_bound = (double)0;
+            }
+        }
+        else if (strcmp(argv[4], "D") == 0)
+        {
+            upper_bound = 69.9;
+        }
+        if (strcmp(argv[3], "F") == 0)
+        {
+            lower_bound = 0;
+        }
+        
+        if (students_grades[i].average <= upper_bound && students_grades[i].average >= lower_bound)
+        {
+            outFile << students_grades[i].studentName << "," << students_grades[i].average << ",";
+            outFile << calcLetter(students_grades[i].average) << endl;
+        }
+    }
+    outFile.close();
 return 0;
 }

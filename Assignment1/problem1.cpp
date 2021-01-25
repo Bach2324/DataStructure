@@ -1,4 +1,4 @@
-// Data Structures & Algorithms prep
+// CSCI 2270 -- Data Structures
 // Assignment 1 -- Problem 1
 // Bach Nguyen
 
