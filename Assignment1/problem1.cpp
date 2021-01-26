@@ -8,7 +8,7 @@
 
 using namespace std;
 
-// Prototyping functions
+// ++++++++++ Function Prototyping ++++++++++ // 
 void printArray(float arr[], int size);
 int addToArrayAsc(float sortedArray[], int numElements, float newValue);
 

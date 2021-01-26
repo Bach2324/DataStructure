@@ -20,48 +20,12 @@ struct studentData                  // Declaring a struct of student data
     double average;                 // Average of sum of all assignment score
 };
 
-void addStudentData(studentData students[], string studentName, int homework, int recitation, int quiz, int exam, int length)
-{
-    students[length].studentName = studentName;                                     // Adding the name of student into an array of struct
-    students[length].homework = homework;                                           // Adding Homework score of student an array of struct
-    students[length].recitation = recitation;                                       // Adding recitation score into an array of struct
-    students[length].quiz = quiz;                                                   // Adding quiz score into an array of struct
-    students[length].exam = exam;                                                   // Adding exam score into an array of struct
-    students[length].average = (homework + recitation + quiz + exam)/(double)4;     // Adding average score into an array of struct 
+// ++++++++++ Function Prototyping ++++++++++ // 
 
-return;
-}
-char calcLetter(double avg)                         // Function to return the letter grade based on student's average score
-{
-    if (avg >= (double)90)                          // Return letter/(char)acter A if the average is 90 or higher
-    {
-        return 'A';
-    }
-    else if (avg >= (double)80 && avg <= 89.9)      // Return letter/(char)acter B if the average is between 80 -> 89.9
-    {
-        return 'B';
-    }
-    else if (avg >= (double)70 && avg <= 79.9)      // Return letter/(char)acter C if the average is between 70 -> 79.9
-    {
-        return 'C';
-    }
-    else if (avg >= (double)60 && avg <= 69.9)      // Return letter/(char)acter A if the average is 60 -> 69.9
-    {
-        return 'D';
-    }
-return 'F';                                         // Return letter/(char)acter F if the average is below 60
-}
+void addStudentData(studentData students[], string studentName, int homework, int recitation, int quiz, int exam, int length);
+char calcLetter(double avg);
+void printList(const studentData students[], int length);
 
-void printList(const studentData students[], int length)        // Function to print the student data in a formatted way
-{
-
-    for (int i = 0; i < length; i++)
-    {
-        cout << students[i].studentName << " earned " << students[i].average << " which is a(n) ";
-        cout << calcLetter(students[i].average) << endl;
-    }
-return;
-}
 int main(int argc, const char *argv[])                  // Passing in command line arguments
 {
     studentData students_grades[100];                   // Declare an array of studentData struct
@@ -159,4 +123,46 @@ int main(int argc, const char *argv[])                  // Passing in command li
     }
     outFile.close();            // Close the file when finish
 return 0;
+}
+void addStudentData(studentData students[], string studentName, int homework, int recitation, int quiz, int exam, int length)
+{
+    students[length].studentName = studentName;                                     // Adding the name of student into an array of struct
+    students[length].homework = homework;                                           // Adding Homework score of student an array of struct
+    students[length].recitation = recitation;                                       // Adding recitation score into an array of struct
+    students[length].quiz = quiz;                                                   // Adding quiz score into an array of struct
+    students[length].exam = exam;                                                   // Adding exam score into an array of struct
+    students[length].average = (homework + recitation + quiz + exam)/(double)4;     // Adding average score into an array of struct 
+
+return;
+}
+char calcLetter(double avg)                         // Function to return the letter grade based on student's average score
+{
+    if (avg >= (double)90)                          // Return letter/(char)acter A if the average is 90 or higher
+    {
+        return 'A';
+    }
+    else if (avg >= (double)80 && avg <= 89.9)      // Return letter/(char)acter B if the average is between 80 -> 89.9
+    {
+        return 'B';
+    }
+    else if (avg >= (double)70 && avg <= 79.9)      // Return letter/(char)acter C if the average is between 70 -> 79.9
+    {
+        return 'C';
+    }
+    else if (avg >= (double)60 && avg <= 69.9)      // Return letter/(char)acter A if the average is 60 -> 69.9
+    {
+        return 'D';
+    }
+return 'F';                                         // Return letter/(char)acter F if the average is below 60
+}
+
+void printList(const studentData students[], int length)        // Function to print the student data in a formatted way
+{
+
+    for (int i = 0; i < length; i++)
+    {
+        cout << students[i].studentName << " earned " << students[i].average << " which is a(n) ";
+        cout << calcLetter(students[i].average) << endl;
+    }
+return;
 }
