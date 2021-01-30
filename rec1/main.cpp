@@ -1,3 +1,7 @@
+// CSCI 2270 -- Data Structures
+// Recitation 1 Assignment
+// Bach Nguyen
+
 #include<iostream>
 #include "swap.h"
 

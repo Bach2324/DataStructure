@@ -1,3 +1,7 @@
+// CSCI 2270 -- Data Structures
+// Recitation 1 Assignment
+// Bach Nguyen
+
 // Header file for Function declarations
 
 void swap(int, int);
