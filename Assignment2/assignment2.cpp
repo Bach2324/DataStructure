@@ -23,15 +23,17 @@ void swap_by_pointers(wordRecord *n1, wordRecord *n2);
 void reverseArray(wordRecord array[], int array_size);
 void sortArray(wordRecord distinctWords[], int length);
 void printTenFromN(wordRecord distinctWords[], int N, int totalNumWords);
-void DoublingArray();
-
+void DoublingArray(wordRecord *& Arr, int &size);
 
 int main(int argc, char const *argv[])
 {
 
-    ifstream inFile;                                                        // stream for reading in file
-    inFile.open(argv[1]);                                                   // open the file
-    string ignoreWords[50];                                                 // Declare an array in main to store ignore words
+    int count = 0, doubling_count = 0, unique_count = 1, size = 100;
+
+    ifstream inFile(argv[2]);                                               // stream for open and reading in file
+    string ignoreWords[50];                                                 // Declare an array in main to store ignore word
+    wordRecord *uniqueWords;
+    uniqueWords = new wordRecord[size];
 
     getIgnoreWords(argv[3], ignoreWords);                                   // Call getIgnoreWords function to grab the information from text file
 
@@ -42,23 +44,50 @@ int main(int argc, char const *argv[])
     }
     else
     {
-        while (inFile >> word)
+        while(inFile.good())                                                        // Read in each word from the text file
         {
-            if(!isIgnoreWord(word, ignoreWords))
+            int word_added = 0;
+            inFile >> word;
+            if(!isIgnoreWord(word, ignoreWords))                                    // If the word being read in is not an ignore word
             {
-
+                for (int i = 0; i < unique_count; i++)                              // Traverse through the current length of the number of unique words so for
+                {
+                    if (word == uniqueWords[i].word)                                // Evaluate if the word being read in has already been read in
+                    {
+                        uniqueWords[i].count++;                                     // We will increment the occurance counter
+                        word_added++;
+                    }
+                    else if (i == unique_count - 1 && word_added == 0)              // If the word is being read in for the very first time
+                    {
+                        uniqueWords[i].word = word;                                 // We will store it into the array of struct word 
+                        uniqueWords[i].count = 1;                                   // Set it's occurance to 1 (first time being read in)
+                        unique_count++;
+                        word_added++;
+                    }
+                }
+                count++;
+            }
+            if (unique_count == size)                                       // Evaluate if we have stored enough words the current size of the array
+            {
+                DoublingArray(uniqueWords, size);                           // Double the size of the array
+                doubling_count++;                                           // count the times that the array has been doubled
             }
         }
+        int total = getTotalNumberNonIgnoreWords(uniqueWords, unique_count);
+        sortArray(uniqueWords,unique_count);
+        cout << "Array doubled: " << doubling_count << endl;
+        cout << "Distinct non-common words: " << unique_count << endl;
+        cout << "Total non-common words: " << total - 1 << endl;
+        cout << "Probability of next 10 words from rank " << argv[1] << endl;
+        cout << "---------------------------------------" << endl;
+        printTenFromN(uniqueWords, stoi(argv[1]), total);
     }
 inFile.close();                                                             // close the file
 return 0;
 }
-
 void getIgnoreWords(const char *ignoreWordFileName, string ignoreWords[])
 {
-    ignoreWords[50];                                                            // Declare array of size 50
-    ifstream inFile(ignoreWordFileName);                                        // To read in file
-    
+    ifstream inFile(ignoreWordFileName);                                        // To read in file    
     if (inFile.fail())                                                          // Check to see if file opens correctly
     {
         cout << "Failed to open " << ignoreWordFileName << endl;        
@@ -79,7 +108,7 @@ void getIgnoreWords(const char *ignoreWordFileName, string ignoreWords[])
 inFile.close();                                                                 // Close file
 return;
 }
-bool isIgnoreWord(string word, string ignoreWords[])                              // Function to evaluate if a word is found in a filled array
+bool isIgnoreWord(string word, string ignoreWords[])                            // Function to evaluate if a word is found in a filled array
 {
     for (int i = 0; i < 50; i++)                                                // Traverse through the array
     {
@@ -90,7 +119,6 @@ bool isIgnoreWord(string word, string ignoreWords[])                            
     }
 return false;                                                                   // Return false otherwise
 }
-
 int getTotalNumberNonIgnoreWords(wordRecord distinctWords[], int length)        // Function to compute total number of words in the entire read in file
 {
     int sum = 0;                                                                // Declare a sum variable
@@ -100,15 +128,14 @@ int getTotalNumberNonIgnoreWords(wordRecord distinctWords[], int length)        
     }
 return sum;                                                                     // Return the total sum once finish
 }
-void swap_by_pointers(wordRecord *n1, wordRecord *n2)           // Function to swap pointers          
+void swap_by_pointers(wordRecord *n1, wordRecord *n2)                           // Function to swap pointers          
 {
     wordRecord temp = *n1;                                      // Assign temp to the value that the pointer n1 is pointing to (dereferencing)
     *n1 = *n2;                                                  // Swap the values that each pointer is pointing to
     *n2 = temp;                                                 // Update the value that pointer n2 is pointing to, 
-                                                                //to what we stored in temp (previous value n1 is pointing to)
+                                                                // to what we stored in temp (previous value n1 is pointing to)
 }
-
-void reverseArray(wordRecord array[], int array_size)           // Function to reverse the array through pointers               
+void reverseArray(wordRecord array[], int array_size)                           // Function to reverse the array through pointers               
 {
     wordRecord *pointer1 = array;                               // pointer1 pointing at the beginning of the array
 
@@ -147,4 +174,16 @@ void printTenFromN(wordRecord distinctWords[], int N, int totalNumWords)        
         probability = (float)distinctWords[i].count / totalNumWords;            // Compute the probability of that word
         cout << setprecision(5) << fixed << probability << " - " << distinctWords[i].word << endl;          
     }                                                                           // Print out the next probability and the corresponding
+}
+void DoublingArray(wordRecord *& Arr, int &size)
+{
+    wordRecord *temp = new wordRecord[2*size];                                  // Temp array & Doubling the size by 2
+    
+    for (int i = 0; i < size ; i++)                                           // For loop to traverse through the original size of the array
+    {
+        temp[i] = Arr[i];                                                       // Copy everything over
+    }
+    delete[] Arr;                                                               // Delete the array to allocate memory
+    Arr = temp;
+    size = size * 2;                                                             
 }
