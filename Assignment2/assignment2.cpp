@@ -45,10 +45,9 @@ int main(int argc, char const *argv[])
     }
     else
     {
-        while(inFile.good())                                                        // Read in each word from the text file
+        while(inFile >> word)                                                       // Read in each word from the text file
         {
             int word_added = 0;                                                     // Declare a variable to track if the word exist in the array or not
-            inFile >> word;                                                         // Read in each word from the text file
             if(!isIgnoreWord(word, ignoreWords))                                    // If the word being read in is not an ignore word
             {
                 for (int i = 0; i < unique_count; i++)                              // Traverse through the current length of the number of unique words so for
@@ -79,16 +78,7 @@ int main(int argc, char const *argv[])
         reverseArray(uniqueWords, unique_count);
         cout << "Array doubled: " << doubling_count << endl;                    // Print the information
         cout << "Distinct non-common words: " << unique_count - 1 << endl;
-
-        if (doubling_count > 6)                                                 // Cheap way to pass Harry Potter test case
-        {
-            cout << "Total non-common words: " << total - 1 << endl;            // Print this if testing for Mobydick.txt
-        }
-        else
-        {
-            cout << "Total non-common words: " << total << endl;                // Print this if testing for harrypotter.txt
-        }
-
+        cout << "Total non-common words: " << total << endl;                    // Print this if testing for harrypotter.txt
         cout << "Probability of next 10 words from rank " << argv[1] << endl;
         cout << "---------------------------------------" << endl;
         printTenFromN(uniqueWords, stoi(argv[1]), total);                       // Print the next 10 from rank N (passed by argument 1)
@@ -172,7 +162,7 @@ void sortArray(wordRecord distinctWords[], int length)                          
                 distinctWords[j + 1] = temp;                                    // Assign the current element being stored in temp to where the previous
             }
         }
-    }                                       // Using the reverseArray function to put most frequent words at the beginning         
+    }
 }
 void sortEqualWord(wordRecord distinctWords[], int length)
 {
@@ -196,7 +186,7 @@ void printTenFromN(wordRecord distinctWords[], int N, int totalNumWords)        
 {
     float probability = 0;                                                      // Declare variable to compute probability
 
-    for (int i = N; i < N+10; i++)                                              // Look to traverse from N to the next 10th place
+    for (int i = N; i <= (N+10)-1; i++)                                         // Look to traverse from N to the next 10th place
     {
         probability = (float)distinctWords[i].count / totalNumWords;            // Compute the probability of that word
         cout << setprecision(5) << fixed << probability << " - " << distinctWords[i].word << endl;          
