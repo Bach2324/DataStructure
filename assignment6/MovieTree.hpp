@@ -8,7 +8,11 @@
 #include <sstream>
 
 using namespace std;
+/*==============================================
 
+    HPP IS GIVEN. DO NOT NEED TO MOTIFY
+
+==============================================*/
 struct MovieNode {
     int ranking;
     string title;

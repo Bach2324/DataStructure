@@ -5,7 +5,11 @@
 #include <sstream>
 
 using namespace std;
+/*==============================================
 
+    MAIN IS GIVEN. DO NOT NEED TO MOTIFY
+
+==============================================*/
 void displayMenu() {
     cout << "======Main Menu======" << endl;
     cout << "1. Find a movie" << endl;
