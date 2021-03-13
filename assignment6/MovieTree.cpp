@@ -129,10 +129,10 @@ void queryMoviesHelper(MovieNode *ptr, float rating, int year)
     queryMoviesHelper(ptr->left, rating, year);         // Pre-order traversal, function call to traverse left
     queryMoviesHelper(ptr->right, rating, year);        // Pre-order traversal, function call to traverse right
 }
-void MovieTree::queryMovies(float rating, int year)     // Main queryMovies() function
+void MovieTree::queryMovies(float rating, int year)   // Main queryMovies() function
 {
   cout << "Movies that came out after " << year << " with rating at least " << rating << ":" << endl;
-  queryMoviesHelper(root, rating, year);                // Call the helper function (runs recursively)
+  queryMoviesHelper(root, rating, year);              // Call the helper function (runs recursively)
 }
 float sum(MovieNode *compute)                         // Helper function for averageRating()
 {
