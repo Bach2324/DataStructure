@@ -128,6 +128,43 @@ void MovieTree::insertMovie(int ranking, string title, int year, float rating)
 	else{insertLLNode(root,LLnode);}				// otherwise, we insert it at the root tree node
 }
 /* ------------------------------------------------------ */
+void MovieTree::removeMovieRecord(string title)
+{	
+													// Evaluate if we are deleting from an empty tree
+	if (root == nullptr){cout << "Movie not found." << endl;return;}
+
+	TreeNode *search = searchCharNode(title[0]);	// Call search function to return the pointer to node containing key char and assign it to search
+	LLMovieNode *crawler = search->head;			// Declare a crawler pointer to traverse linked list, assign it as the head
+	LLMovieNode *previous = crawler;				// Declare a previous pointer to traverse behind crawler
+
+	if (search->head->title == title)				// If the node we are deleting is the head node of the linked list
+	{
+		if (crawler->next == nullptr)				// Then we evaluate to see if it's the only node or if there are several nodes
+		{
+			delete crawler;							// If it's the only node, we delete it 
+			search->head = nullptr;					// and set the associated tree node to nullptr, indicating empty LL
+		}
+		else										// otherwise, if there are several nodes
+		{											
+			search->head = crawler->next;			// Assign the head to be the next node in the linked list
+			delete crawler;							// Delete the current node
+		}
+	}
+	else											// Evaluate if we are not deleting at the head/front of the linked list
+	{
+		while (crawler != nullptr)					// Traverse the Linked List
+		{
+			if (crawler->title == title)			// If we found the node that contains the title we are looking for
+			{
+				previous->next = crawler->next;		// Assign the current node pointer will be the next node
+				delete crawler;						// Delete the current node
+			}
+			previous = crawler;						// Iterate previous
+			crawler = crawler->next;				// Iterate crawler
+		}
+	}
+}
+/* ------------------------------------------------------ */
 TreeNode* searchCharHelper(TreeNode* curr, char key)
 {
     if (curr == NULL)
