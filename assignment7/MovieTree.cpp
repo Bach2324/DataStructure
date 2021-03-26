@@ -25,22 +25,22 @@ MovieTree::~MovieTree()
 
 }
 /* ------------------------------------------------------ */
-void showMovieCollectionHelper(TreeNode *t)								// helper function Print movies according to given letter
+void showMovieCollectionHelper(TreeNode *t)		// helper function Print movies according to given letter
 {
-	if(t == nullptr){return;}											// exit function call if t is null
-	showMovieCollectionHelper(t->leftChild);							// Otherwise, in-order traversal (left side)
+	if(t == nullptr){return;}					// exit function call if t is null
+	showMovieCollectionHelper(t->leftChild);	// Otherwise, in-order traversal (left side)
 	cout << "Movies starting with letter: " << t->titleChar << endl;	// Print the header of print statement and letter of movies
-	LLMovieNode *m = t->head;											// Create a new LL node that points to the head
-	while (m != nullptr)												// Traverse the linked list for that specific letter
+	LLMovieNode *m = t->head;					// Create a new LL node that points to the head
+	while (m != nullptr)						// Traverse the linked list for that specific letter
 	{
-		cout << " >> " << m->title << " " << m->rating << endl;			// Print all movies that started with given letter follow by rating
-		m = m->next;													// Go to the next node
+		cout << " >> " << m->title << " " << m->rating << endl;	// Print all movies that started with given letter follow by rating
+		m = m->next;							// Go to the next node
 	}
-	showMovieCollectionHelper(t->rightChild);							// In-order traversal (right side)
+	showMovieCollectionHelper(t->rightChild);	// In-order traversal (right side)
 }
-void MovieTree::showMovieCollection()									// Main print movie function
+void MovieTree::showMovieCollection()			// Main print movie function
 {
-	showMovieCollectionHelper(root);									// Call helper function
+	showMovieCollectionHelper(root);			// Call helper function
 }
 /* ------------------------------------------------------ */
 void inorderTraversalHelper(TreeNode * root) {
@@ -57,75 +57,75 @@ void MovieTree::inorderTraversal() {
 	cout << endl;
 }
 /* ------------------------------------------------------ */
-void insertLLNode(TreeNode *t, LLMovieNode *m)						// Helper function to insert node in the Linked List part
+void insertLLNode(TreeNode *t, LLMovieNode *m)		// Helper function to insert node in the Linked List part
 {
-	if (t->head == nullptr){t->head = m;}							// add the node to the head if linked list is empty
-	else if (m->title < t->head->title)								// If the node is alphabetically before the head node
-	{																// we will insert at the head
-		m->next = t->head;											// Assign the next slot node as the current head
-		t->head = m;												// Assign the current head position to be the node being inserted
+	if (t->head == nullptr){t->head = m;}			// add the node to the head if linked list is empty
+	else if (m->title < t->head->title)				// If the node is alphabetically before the head node
+	{												// we will insert at the head
+		m->next = t->head;							// Assign the next slot node as the current head
+		t->head = m;								// Assign the current head position to be the node being inserted
 	}
-	else															// Otherwise, we will evaluate if node needs to be inserted 
-	{																// Somewhere inbetween or at the end
-		LLMovieNode *crawler = t->head;								// Declare a crawler pointer to traverse the linked list
-		LLMovieNode *previous = crawler;							// Declare a previous pointer to traverse behind crawler
-		bool added = false;											// Bool checker to see if the node has been added
-		while(crawler != nullptr)									// Traversing the linked list from head
-		{															// If we find that the data is somewhere in between alphabetically
+	else											// Otherwise, we will evaluate if node needs to be inserted 
+	{												// Somewhere inbetween or at the end
+		LLMovieNode *crawler = t->head;				// Declare a crawler pointer to traverse the linked list
+		LLMovieNode *previous = crawler;			// Declare a previous pointer to traverse behind crawler
+		bool added = false;							// Bool checker to see if the node has been added
+		while(crawler != nullptr)					// Traversing the linked list from head
+		{											// If we find that the data is somewhere in between alphabetically
 			if (m->title > previous->title && m->title < crawler->title)
-			{														// We will insert it inbetween the two nodes that it sits at
-				m->next = crawler;									// Assign the next slot node to be what crawler is pointing to
-				previous->next = m;									// assign the node to be inserted to where previous next is (where crawler is at)
-				added = true;										// Convert added bool to be true since we just inserted the node
+			{										// We will insert it inbetween the two nodes that it sits at
+				m->next = crawler;					// Assign the next slot node to be what crawler is pointing to
+				previous->next = m;					// assign the node to be inserted to where previous next is (where crawler is at)
+				added = true;						// Convert added bool to be true since we just inserted the node
 			}			
-			previous = crawler;										// Iterate previous pointer
-			crawler = crawler->next;								// Iterate crawler pointer
+			previous = crawler;						// Iterate previous pointer
+			crawler = crawler->next;				// Iterate crawler pointer
 		}
-		if (!added)													// If we are at the end of our traversal and the node has not been added
-		{															// This means that the data is alphabetically greater than all the other data
-			previous->next = m;										// previous next pointer will now point to node that m contains
-			m->next = nullptr;										// Since it's the tail node, we need to assign it's pointer to null
-			added = true;											// Turn added to true since we added the node
+		if (!added)									// If we are at the end of our traversal and the node has not been added
+		{											// This means that the data is alphabetically greater than all the other data
+			previous->next = m;						// previous next pointer will now point to node that m contains
+			m->next = nullptr;						// Since it's the tail node, we need to assign it's pointer to null
+			added = true;							// Turn added to true since we added the node
 		}
 	}
 }
-void insertTreeNode(TreeNode *&t, TreeNode *&parent)				// Helper function to add node as a tree node
+void insertTreeNode(TreeNode *&t, TreeNode *&parent)// Helper function to add node as a tree node
 {
-	if (parent == nullptr){parent = t;}								// If tree is empty, we insert node t to be the root node
-	if (t->titleChar < parent->titleChar)							// If the current node's title is alphabetically less than the parent node
+	if (parent == nullptr){parent = t;}				// If tree is empty, we insert node t to be the root node
+	if (t->titleChar < parent->titleChar)			// If the current node's title is alphabetically less than the parent node
 	{
-		if (parent->leftChild == nullptr)							// If we hit a left child that points to null
+		if (parent->leftChild == nullptr)			// If we hit a left child that points to null
 		{
-			parent->leftChild = t;									// We insert the node at that position
-			t->parent = parent;										// Set the parent pointer
-		}															// will will evaluate the left side
-		else{insertTreeNode(t, parent->leftChild);}					// otherwise, we recursively traverse until we hit a nullptr
+			parent->leftChild = t;					// We insert the node at that position
+			t->parent = parent;						// Set the parent pointer
+		}											// will will evaluate the left side
+		else{insertTreeNode(t, parent->leftChild);}	// otherwise, we recursively traverse until we hit a nullptr
 	}
-	if (t->titleChar > parent->titleChar)							// This is for if the title is greater than the parent data 
-	{									
-		if (parent->rightChild == nullptr)							// If we hit a right child that points to null
+	if (t->titleChar > parent->titleChar)			// This is for if the title is greater than the parent data 
+	{								
+		if (parent->rightChild == nullptr)			// If we hit a right child that points to null
 		{															
-			parent->rightChild = t;									// Insert the node at that position
-			t->parent = parent;										// Set the parent pointer
+			parent->rightChild = t;					// Insert the node at that position
+			t->parent = parent;						// Set the parent pointer
 		}
-		else{insertTreeNode(t, parent->rightChild);}				// Otherwise, traverse until we find a nullptr
+		else{insertTreeNode(t, parent->rightChild);}// Otherwise, traverse until we find a nullptr
 	}
 }
 void MovieTree::insertMovie(int ranking, string title, int year, float rating)
-{																	// Main function to insert movie
-	TreeNode *search = new TreeNode;								// Dynamically allocate a search node for tree
-	TreeNode *t = new TreeNode;										// Dynamically allocate a t node for tree
-	t->titleChar = title[0];										// Assign data of tree node to be the first character of string title
+{													// Main function to insert movie
+	TreeNode *search = new TreeNode;				// Dynamically allocate a search node for tree
+	TreeNode *t = new TreeNode;						// Dynamically allocate a t node for tree
+	t->titleChar = title[0];						// Assign data of tree node to be the first character of string title
 
-	LLMovieNode * LLnode = new LLMovieNode;							// Dynamically allocate a node for linked list
-	LLnode = getLLMovieNode(ranking, title, year, rating);			// get the information from the getLLMovieNode function and assign it to LLnode
+	LLMovieNode * LLnode = new LLMovieNode;			// Dynamically allocate a node for linked list
+	LLnode = getLLMovieNode(ranking, title, year, rating);// get the information from the getLLMovieNode function and assign it to LLnode
 	
-	if (root == nullptr){root = t;}									// Assign t to the root if tree is empty
-	else{insertTreeNode(t, root);}									// Otherwise, we call our insertTreeNode function to insert the tree node
+	if (root == nullptr){root = t;}					// Assign t to the root if tree is empty
+	else{insertTreeNode(t, root);}					// Otherwise, we call our insertTreeNode function to insert the tree node
 
-	search = searchCharNode(title[0]);								// Call searchCharNode to get the pointer pointing to the node that contains key char
+	search = searchCharNode(title[0]);				// Call searchCharNode to get the pointer pointing to the node that contains key char
 	if(search->titleChar == title[0]){insertLLNode(search,LLnode);} // If we found the node containing key char, call insertLLnode to insert node
-	else{insertLLNode(root,LLnode);}								// otherwise, we insert it at the root tree node
+	else{insertLLNode(root,LLnode);}				// otherwise, we insert it at the root tree node
 }
 /* ------------------------------------------------------ */
 TreeNode* searchCharHelper(TreeNode* curr, char key)
