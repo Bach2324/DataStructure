@@ -17,7 +17,7 @@ LLMovieNode* getLLMovieNode(int r, std::string t, int y, float q)
 /* ------------------------------------------------------ */
 MovieTree::MovieTree()
 {
-	root = NULL;
+    root = NULL;
 }
 /* ------------------------------------------------------ */
 MovieTree::~MovieTree()
@@ -43,17 +43,19 @@ void MovieTree::showMovieCollection()			// Main print movie function
 	showMovieCollectionHelper(root);			// Call helper function
 }
 /* ------------------------------------------------------ */
-void inorderTraversalHelper(TreeNode * root) {
-		if (root == NULL) {
-			return;
-		}
+void inorderTraversalHelper(TreeNode * root)
+{
+    if (root == NULL) {
+        return;
+    }
 
-		inorderTraversalHelper(root->leftChild);
-		cout << root->titleChar << " ";
-		inorderTraversalHelper(root->rightChild);
+    inorderTraversalHelper(root->leftChild);
+    cout << root->titleChar << " ";
+    inorderTraversalHelper(root->rightChild);
 }
-void MovieTree::inorderTraversal() {
-	inorderTraversalHelper(root);
+void MovieTree::inorderTraversal()
+{	
+    inorderTraversalHelper(root);
 	cout << endl;
 }
 /* ------------------------------------------------------ */
