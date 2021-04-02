@@ -28,20 +28,20 @@ MovieTree::MovieTree()
 /* ------------------------------------------------------ */
 void DeleteAllDS(TreeNode *del,	LLMovieNode *delLL)	// Helper function for destructor
 {
-	if (del == nullptr){return;}					// Return if pointer is null
-	DeleteAllDS(del->leftChild, del->head);			// Otherwise we will post-order traverse
-	DeleteAllDS(del->rightChild, del->head);		// Traverse right
-	while (del->head != nullptr)					// Entering the linked list portion
-	{												// Traverse the linked list
-		delLL = del->head->next;					// Assign the next head node to delLL
-		delete del->head;							// Delete current head node
-		del->head = delLL;							// Assign the new head node to what we stored in DelLL
+	if (del == nullptr){return;}				// Return if pointer is null
+	DeleteAllDS(del->leftChild, del->head);		// Otherwise we will post-order traverse
+	DeleteAllDS(del->rightChild, del->head);	// Traverse right
+	while (del->head != nullptr)				// Entering the linked list portion
+	{											// Traverse the linked list
+		delLL = del->head->next;				// Assign the next head node to delLL
+		delete del->head;						// Delete current head node
+		del->head = delLL;						// Assign the new head node to what we stored in DelLL
 	}
-	delete del;										// delete/deallocate the tree node we are currently at
+	delete del;									// delete/deallocate the tree node we are currently at
 }
-MovieTree::~MovieTree()								// Desctructor function
+MovieTree::~MovieTree()							// Desctructor function
 {
-	DeleteAllDS(root, root->head);					// Call helper function to deallocate all Data Structure
+	DeleteAllDS(root, root->head);				// Call helper function to deallocate all Data Structure
 }
 /* ------------------------------------------------------ */
 void showMovieCollectionHelper(TreeNode *t)		// helper function Print movies according to given letter
