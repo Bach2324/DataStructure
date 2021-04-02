@@ -49,7 +49,7 @@ void showMovieCollectionHelper(TreeNode *t)		// helper function Print movies acc
 	if(t == nullptr){return;}			// exit function call if t is null
 	showMovieCollectionHelper(t->leftChild);	// Otherwise, in-order traversal (left side)
 	LLMovieNode *m = t->head;			// Create a new LL node that points to the head
-	if (m != nullptr)				// Make sure we are not printing anything if 
+	if (m != nullptr)				// Make sure we are not printing anything if the Linked List is empty
 	{						// Print the header of print statement and letter of movies
 		cout << "Movies starting with letter: " << t->titleChar << endl;
 		while (m != nullptr)			// Traverse the linked list for that specific letter
@@ -137,7 +137,7 @@ void insertTreeNode(TreeNode *&t, TreeNode *&parent)	// Helper function to add n
 }
 void MovieTree::insertMovie(int ranking, string title, int year, float rating)
 {	
-	if (searchCharNode(title[0]) == NULL)		// Call searchChar node check if node containing the char exist
+	if (searchCharNode(title[0]) == nullptr)	// Call searchChar node check if node containing the char exist
 	{						// If not we, need to allocate memory and insert a new tree NOde
 		TreeNode *t = getTreeNode(title);	// Call getTreeNode to create new node
 		insertTreeNode(t, root);		// Call insertTree helper function to insert tree node
