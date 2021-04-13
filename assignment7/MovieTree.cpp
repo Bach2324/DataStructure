@@ -28,34 +28,34 @@ MovieTree::MovieTree()
 /* ------------------------------------------------------ */
 void DeleteAllDS(TreeNode *del,	LLMovieNode *delLL)	// Helper function for destructor
 {
-	if (del == nullptr){return;}				// Return if pointer is null
+	if (del == nullptr){return;}			// Return if pointer is null
 	DeleteAllDS(del->leftChild, del->head);		// Otherwise we will post-order traverse
 	DeleteAllDS(del->rightChild, del->head);	// Traverse right
-	while (del->head != nullptr)				// Entering the linked list portion
-	{											// Traverse the linked list
-		delLL = del->head->next;				// Assign the next head node to delLL
-		delete del->head;						// Delete current head node
-		del->head = delLL;						// Assign the new head node to what we stored in DelLL
+	while (del->head != nullptr)			// Entering the linked list portion
+	{						// Traverse the linked list
+		delLL = del->head->next;		// Assign the next head node to delLL
+		delete del->head;			// Delete current head node
+		del->head = delLL;			// Assign the new head node to what we stored in DelLL
 	}
-	delete del;									// delete/deallocate the tree node we are currently at
+	delete del;					// delete/deallocate the tree node we are currently at
 }
-MovieTree::~MovieTree()							// Desctructor function
+MovieTree::~MovieTree()					// Desctructor function
 {
-	DeleteAllDS(root, root->head);				// Call helper function to deallocate all Data Structure
+	DeleteAllDS(root, root->head);			// Call helper function to deallocate all Data Structure
 }
 /* ------------------------------------------------------ */
 void showMovieCollectionHelper(TreeNode *t)		// helper function Print movies according to given letter
 {
-	if(t == nullptr){return;}				// exit function call if t is null
+	if(t == nullptr){return;}			// exit function call if t is null
 	showMovieCollectionHelper(t->leftChild);	// Otherwise, in-order traversal (left side)
-	LLMovieNode *m = t->head;					// Create a new LL node that points to the head
-	if (m != nullptr)							// Make sure we are not printing anything if 
-	{											// Print the header of print statement and letter of movies
+	LLMovieNode *m = t->head;			// Create a new LL node that points to the head
+	if (m != nullptr)				// Make sure we are not printing anything if 
+	{						// Print the header of print statement and letter of movies
 		cout << "Movies starting with letter: " << t->titleChar << endl;
-		while (m != nullptr)					// Traverse the linked list for that specific letter
-		{										// Print all movies that started with given letter follow by rating
+		while (m != nullptr)			// Traverse the linked list for that specific letter
+		{					// Print all movies that started with given letter follow by rating
 			cout << " >> " << m->title << " " << m->rating << endl;
-			m = m->next;						// Go to the next node
+			m = m->next;			// Go to the next node
 		}
 	}
 	showMovieCollectionHelper(t->rightChild);	// In-order traversal (right side)
@@ -136,15 +136,15 @@ void insertTreeNode(TreeNode *&t, TreeNode *&parent)	// Helper function to add n
 }
 void MovieTree::insertMovie(int ranking, string title, int year, float rating)
 {	
-	if (searchCharNode(title[0]) == nullptr)		// Call searchChar node check if node containing the char exist
-	{												// If not we, need to allocate memory and insert a new tree NOde
-		TreeNode *t = getTreeNode(title);			// Call getTreeNode to create new node
-		insertTreeNode(t, root);					// Call insertTree helper function to insert tree node
-	}												// Otherwise, we call our insertTreeNode function to insert the tree node											// Main function to insert movie
+	if (searchCharNode(title[0]) == nullptr)	// Call searchChar node check if node containing the char exist
+	{						// If not we, need to allocate memory and insert a new tree NOde
+		TreeNode *t = getTreeNode(title);	// Call getTreeNode to create new node
+		insertTreeNode(t, root);		// Call insertTree helper function to insert tree node
+	}						// Otherwise, we call our insertTreeNode function to insert the tree node											// Main function to insert movie
 	TreeNode* search = searchCharNode(title[0]);	// Call searchCharNode to get the pointer pointing to the node that contains key char
 	LLMovieNode * LLnode = getLLMovieNode(ranking, title, year, rating);// get the information from the getLLMovieNode function and assign it to LLnode
 	if(search->titleChar == title[0]){insertLLNode(search,LLnode);} // If we found the node containing key char, call insertLLnode to insert node
-	else{insertLLNode(root,LLnode);}				// otherwise, we insert it at the root tree node
+	else{insertLLNode(root,LLnode);}		// otherwise, we insert it at the root tree node
 }
 /* ------------------------------------------------------ */
 void MovieTree::removeMovieRecord(string title)
@@ -201,23 +201,23 @@ TreeNode* MovieTree::searchCharNode(char key)
 /* ------------------------------------------------------ */
 void MovieTree::leftRotation(TreeNode* curr)		// Function to rotate tree
 {											
-	TreeNode* y = curr->rightChild;					// Declare a new pointer and point it to right child of curr
-	curr->rightChild = y->leftChild;				// assign curr right child to be y's left child
+	TreeNode* y = curr->rightChild;			// Declare a new pointer and point it to right child of curr
+	curr->rightChild = y->leftChild;		// assign curr right child to be y's left child
 	
-	if (y->leftChild != NULL)						// Check to see if y is null
+	if (y->leftChild != NULL)				// Check to see if y is null
 	{
-		y->leftChild->parent = curr;				// If not, then we assign y's leftchild's parent as curr
+		y->leftChild->parent = curr;		// If not, then we assign y's leftchild's parent as curr
 	}
-	y->parent = curr->parent;						// Assign y parent as curr's parent
-	if (curr->parent == NULL){root = y;}			// if curr's parent is null, assign root as y
-	else											// Otherwise, we check for other conditions
+	y->parent = curr->parent;				// Assign y parent as curr's parent
+	if (curr->parent == NULL){root = y;}		// if curr's parent is null, assign root as y
+	else						// Otherwise, we check for other conditions
 	{
-		if (curr == curr->parent->leftChild)		// if the current node is the left child's parent
+		if (curr == curr->parent->leftChild)	// if the current node is the left child's parent
 		{
-			curr->parent->leftChild = y;			// Then we assign it as y
+			curr->parent->leftChild = y;	// Then we assign it as y
 		}
-		else{curr->parent->rightChild = y;}			// Otherwise, we assign rightchild's as y
+		else{curr->parent->rightChild = y;}	// Otherwise, we assign rightchild's as y
 	}
-	y->leftChild = curr;							// At the end, y's left child is curr
-	curr->parent = y;								// curr's parent is y
+	y->leftChild = curr;				// At the end, y's left child is curr
+	curr->parent = y;				// curr's parent is y
 }
