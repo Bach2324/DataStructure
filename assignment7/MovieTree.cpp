@@ -136,7 +136,7 @@ void insertTreeNode(TreeNode *&t, TreeNode *&parent)// Helper function to add no
 }
 void MovieTree::insertMovie(int ranking, string title, int year, float rating)
 {	
-	if (searchCharNode(title[0]) == NULL)			// Call searchChar node check if node containing the char exist
+	if (searchCharNode(title[0]) == nullptr)		// Call searchChar node check if node containing the char exist
 	{												// If not we, need to allocate memory and insert a new tree NOde
 		TreeNode *t = getTreeNode(title);			// Call getTreeNode to create new node
 		insertTreeNode(t, root);					// Call insertTree helper function to insert tree node
