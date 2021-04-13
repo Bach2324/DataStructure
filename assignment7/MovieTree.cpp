@@ -204,11 +204,11 @@ void MovieTree::leftRotation(TreeNode* curr)		// Function to rotate tree
 	TreeNode* y = curr->rightChild;			// Declare a new pointer and point it to right child of curr
 	curr->rightChild = y->leftChild;		// assign curr right child to be y's left child
 	
-	if (y->leftChild != NULL)				// Check to see if y is null
+	if (y->leftChild != NULL)			// Check to see if y is null
 	{
 		y->leftChild->parent = curr;		// If not, then we assign y's leftchild's parent as curr
 	}
-	y->parent = curr->parent;				// Assign y parent as curr's parent
+	y->parent = curr->parent;			// Assign y parent as curr's parent
 	if (curr->parent == NULL){root = y;}		// if curr's parent is null, assign root as y
 	else						// Otherwise, we check for other conditions
 	{
