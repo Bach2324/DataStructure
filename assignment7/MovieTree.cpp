@@ -14,11 +14,11 @@ LLMovieNode* getLLMovieNode(int r, std::string t, int y, float q)
 	lmn->next =NULL;
 	return lmn;
 }
-TreeNode *getTreeNode(string title)					// Function to dynamically allocate a Tree Node
+TreeNode *getTreeNode(string title)			// Function to dynamically allocate a Tree Node
 {
-	TreeNode *in = new TreeNode();					// Dynamically allocate a new node
-	in->titleChar = title[0];						// Assign it's data value
-	return in;										// return the pointer
+	TreeNode *in = new TreeNode();			// Dynamically allocate a new node
+	in->titleChar = title[0];			// Assign it's data value
+	return in;					// return the pointer
 }
 /* ------------------------------------------------------ */
 MovieTree::MovieTree()
